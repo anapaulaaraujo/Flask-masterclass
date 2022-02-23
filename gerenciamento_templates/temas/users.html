@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block subtitulo%} Usuários {% endblock %}
+
+<!-- import de macro  -->
+{% from 'components/user.html' import user_component %}
+
+{% block conteudo%}
+    {% include 'components/notification.html' %}
+    
+    {{ user_component(users)}}
+
+
+{% endblock %}
