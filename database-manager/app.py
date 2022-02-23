@@ -17,6 +17,7 @@ login_manager = LoginManager(app)
 
 @login_manager.user_loader
 def current_user(user_id):
+    print(user_id)
     return User.query.get(user_id)
 
 class User(db.Model, UserMixin): #herdando da classe pai db.model e UserMixin
