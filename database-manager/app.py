@@ -1,8 +1,9 @@
+from time import time
 from flask import Flask, render_template, redirect, request, url_for, flash
-import flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import timedelta
 
 app = Flask(__name__)
 #suprir o erro que nao tinha banco de dados associado
@@ -87,6 +88,7 @@ def login():
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
+        remember = request.form["remember"]
 
         user = User.query.filter_by(email=email).first()
 
@@ -99,9 +101,8 @@ def login():
             flash("Credencias Inválidas")
             return redirect(url_for("login"))
 
-        login_user(user)
+        login_user(user, remember=remember, duration=timedelta(days=7))
         return redirect(url_for("index"))
-
 
     return render_template("login.html")
 
